@@ -511,7 +511,7 @@ $RemoteScriptBlock = {
 		
 		$GetProcAddressAddr = Get-ProcAddress kernel32.dll GetProcAddress
 		$GetProcAddressDelegate = Get-DelegateType @([IntPtr], [String]) ([IntPtr])
-		$GetProcAddress = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($GetProcAddressAddr, $GetProcAddressDelegate)
+		$GetProcAddress = $UnsafeNativeMethods.GetMethod('GetProcAddress', [reflection.bindingflags] "Public,Static", $null, [System.Reflection.CallingConventions]::Any, @((New-Object System.Runtime.InteropServices.HandleRef).GetType(), [string]), $null);
 		$Win32Functions | Add-Member -MemberType NoteProperty -Name GetProcAddress -Value $GetProcAddress
 		
 		$GetProcAddressOrdinalAddr = Get-ProcAddress kernel32.dll GetProcAddress
